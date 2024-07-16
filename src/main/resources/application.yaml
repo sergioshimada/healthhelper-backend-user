@@ -1,0 +1,40 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: healthhelper-backend-user
+  datasource:
+    hikari:
+      connection-timeout: 30000
+      maximum-pool-size: 3
+      minimum-idle: 1
+    password: hhpassword
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: true
+    properties:
+      hibernate:
+        default_schema: '"user"'
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      group-id: healthhelper-user
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      properties:
+        allow:
+          auto:
+            create:
+              topics: true
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  main:
+    allow-bean-definition-overriding: true
+topic:
+  create:
+    user: topic-new-user
